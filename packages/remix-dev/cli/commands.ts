@@ -150,21 +150,6 @@ export async function build(
 
   log(`Building Remix app in ${mode} mode...`);
 
-  if (modeArg === "production" && sourcemap) {
-    console.warn(
-      "\n⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️"
-    );
-    console.warn(
-      "You have enabled source maps in production. This will make your " +
-        "server-side code visible to the public and is highly discouraged! If " +
-        "you insist, please ensure you are using environment variables for " +
-        "secrets and not hard-coding them into your source!"
-    );
-    console.warn(
-      "⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️\n"
-    );
-  }
-
   let start = Date.now();
   let config = await readConfig(remixRoot);
   fse.emptyDirSync(config.assetsBuildDirectory);
