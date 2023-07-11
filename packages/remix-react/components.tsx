@@ -1782,16 +1782,19 @@ export const LiveReload =
   process.env.NODE_ENV !== "development"
     ? () => null
     : function LiveReload({
+        host,
         // TODO: remove REMIX_DEV_SERVER_WS_PORT in v2
         port,
         timeoutMs = 1000,
         nonce = undefined,
       }: {
+        host?: string;
         port?: number;
         timeoutMs?: number;
         nonce?: string;
       }) {
         let js = String.raw;
+        host = JSON.stringify(host);
         return (
           <script
             nonce={nonce}
@@ -1800,7 +1803,7 @@ export const LiveReload =
               __html: js`
                 function remixLiveReloadConnect(config) {
                   let protocol = location.protocol === "https:" ? "wss:" : "ws:";
-                  let host = location.hostname;
+                  let host = ${host} || (window.__remixContext && window.__remixContext.dev && window.__remixContext.dev.host) || location.hostname;
                   let port = ${port} || (window.__remixContext && window.__remixContext.dev && window.__remixContext.dev.port) || ${Number(
                 process.env.REMIX_DEV_SERVER_WS_PORT || 8002
               )};
